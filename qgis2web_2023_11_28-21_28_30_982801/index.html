@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1.js"></script>
+        <script src="data/SITIOS_LISBOA_2.js"></script>
+        <script src="data/linhasdecosta_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[38.702524410105326,-9.156020193984418],[38.7205270433014,-9.123107929819493]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_Googlemaps_satteliteonly_0');
+        map.getPane('pane_Googlemaps_satteliteonly_0').style.zIndex = 400;
+        var layer_Googlemaps_satteliteonly_0 = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
+            pane: 'pane_Googlemaps_satteliteonly_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_Googlemaps_satteliteonly_0;
+        map.addLayer(layer_Googlemaps_satteliteonly_0);
+        function pop_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Ref</strong><br />' + (feature.properties['Ref'] !== null ? autolinker.link(feature.properties['Ref'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['X'] !== null ? autolinker.link(feature.properties['X'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Y'] !== null ? autolinker.link(feature.properties['Y'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Z'] !== null ? autolinker.link(feature.properties['Z'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1_0() {
+            return {
+                pane: 'pane_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1');
+        map.getPane('pane_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1').style.zIndex = 401;
+        map.getPane('pane_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1').style['mix-blend-mode'] = 'normal';
+        var layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1 = new L.geoJson(json_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1',
+            layerName: 'layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1',
+            pane: 'pane_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1',
+            onEachFeature: pop_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1);
+        map.addLayer(layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1);
+        function pop_SITIOS_LISBOA_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(feature.properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['URL'] !== null ? autolinker.link(feature.properties['URL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FREGUESIA'] !== null ? autolinker.link(feature.properties['FREGUESIA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LATITUDE'] !== null ? autolinker.link(feature.properties['LATITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['LONGITUDE'] !== null ? autolinker.link(feature.properties['LONGITUDE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>PERIODOS</strong><br />' + (feature.properties['PERIODOS'] !== null ? autolinker.link(feature.properties['PERIODOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Tipo_Principal'] !== null ? autolinker.link(feature.properties['Tipo_Principal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Outros_Tipos'] !== null ? autolinker.link(feature.properties['Outros_Tipos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DESIGNACAO'] !== null ? autolinker.link(feature.properties['DESIGNACAO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CNS'] !== null ? autolinker.link(feature.properties['CNS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DRC'] !== null ? autolinker.link(feature.properties['DRC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_SITIOS_LISBOA_2_0(feature) {
+            switch(String(feature.properties['PERIODOS'])) {
+                case 'Contemporaneo':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(52,18,204,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'IdadedoFerroModerno':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(92,207,132,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'IdadedoFerroRomano':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(206,140,74,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'IdadedoFerroRomanoMedievalModerno':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(193,236,136,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'MedievalModerno':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(214,23,102,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Moderno':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(88,121,213,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'ModernoContemporaneo':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(30,168,218,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'NeoliticoRomano':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(114,233,99,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Romano':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(235,229,69,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RomanoMedieval':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,129,205,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RomanoMedievalModerno':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,132,238,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'RomanoModerno':
+                    return {
+                pane: 'pane_SITIOS_LISBOA_2',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,80,73,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_SITIOS_LISBOA_2');
+        map.getPane('pane_SITIOS_LISBOA_2').style.zIndex = 402;
+        map.getPane('pane_SITIOS_LISBOA_2').style['mix-blend-mode'] = 'normal';
+        var layer_SITIOS_LISBOA_2 = new L.geoJson(json_SITIOS_LISBOA_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SITIOS_LISBOA_2',
+            layerName: 'layer_SITIOS_LISBOA_2',
+            pane: 'pane_SITIOS_LISBOA_2',
+            onEachFeature: pop_SITIOS_LISBOA_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_SITIOS_LISBOA_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_SITIOS_LISBOA_2);
+        map.addLayer(layer_SITIOS_LISBOA_2);
+        function pop_linhasdecosta_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Periodo</strong><br />' + (feature.properties['Periodo'] !== null ? autolinker.link(feature.properties['Periodo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_linhasdecosta_3_0(feature) {
+            switch(String(feature.properties['Periodo'])) {
+                case '1785':
+                    return {
+                pane: 'pane_linhasdecosta_3',
+                opacity: 1,
+                color: 'rgba(221,49,129,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Romano':
+                    return {
+                pane: 'pane_linhasdecosta_3',
+                opacity: 1,
+                color: 'rgba(25,118,224,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case '1650':
+                    return {
+                pane: 'pane_linhasdecosta_3',
+                opacity: 1,
+                color: 'rgba(253,191,111,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_linhasdecosta_3');
+        map.getPane('pane_linhasdecosta_3').style.zIndex = 403;
+        map.getPane('pane_linhasdecosta_3').style['mix-blend-mode'] = 'normal';
+        var layer_linhasdecosta_3 = new L.geoJson(json_linhasdecosta_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_linhasdecosta_3',
+            layerName: 'layer_linhasdecosta_3',
+            pane: 'pane_linhasdecosta_3',
+            onEachFeature: pop_linhasdecosta_3,
+            style: style_linhasdecosta_3_0,
+        });
+        bounds_group.addLayer(layer_linhasdecosta_3);
+        map.addLayer(layer_linhasdecosta_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'linhas de costa<br /><table><tr><td style="text-align: center;"><img src="legend/linhasdecosta_3_17850.png" /></td><td>1785</td></tr><tr><td style="text-align: center;"><img src="legend/linhasdecosta_3_Romano1.png" /></td><td>Romano</td></tr><tr><td style="text-align: center;"><img src="legend/linhasdecosta_3_16502.png" /></td><td>1650</td></tr></table>': layer_linhasdecosta_3,'SITIOS_LISBOA<br /><table><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_Contemporaneo0.png" /></td><td>Contemporaneo</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_IdadedoFerroModerno1.png" /></td><td>IdadedoFerroModerno</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_IdadedoFerroRomano2.png" /></td><td>IdadedoFerroRomano</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_IdadedoFerroRomanoMedievalModerno3.png" /></td><td>IdadedoFerroRomanoMedievalModerno</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_MedievalModerno4.png" /></td><td>MedievalModerno</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_Moderno5.png" /></td><td>Moderno</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_ModernoContemporaneo6.png" /></td><td>ModernoContemporaneo</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_NeoliticoRomano7.png" /></td><td>NeoliticoRomano</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_Romano8.png" /></td><td>Romano</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_RomanoMedieval9.png" /></td><td>RomanoMedieval</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_RomanoMedievalModerno10.png" /></td><td>RomanoMedievalModerno</td></tr><tr><td style="text-align: center;"><img src="legend/SITIOS_LISBOA_2_RomanoModerno11.png" /></td><td>RomanoModerno</td></tr></table>': layer_SITIOS_LISBOA_2,'<img src="legend/ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1.png" /> ESSENT_COORD_GEOARQ — essentiacoordgeoarqdoc': layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1,"Googlemaps_satteliteonly": layer_Googlemaps_satteliteonly_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Ref'] !== null?String('<div style="color: #323232; font-size: 6pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['Ref']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_linhasdecosta_3.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Periodo'] !== null?String('<div style="color: #323232; font-size: 10pt; font-family: \'Open Sans\', sans-serif;">' + layer.feature.properties['Periodo']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_linhasdecosta_3'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1,layer_linhasdecosta_3]);
+        map.on("zoomend", function(){
+            resetLabels([layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1,layer_linhasdecosta_3]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1,layer_linhasdecosta_3]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_ESSENT_COORD_GEOARQessentiacoordgeoarqdoc_1,layer_linhasdecosta_3]);
+        });
+        </script>
+    </body>
+</html>
